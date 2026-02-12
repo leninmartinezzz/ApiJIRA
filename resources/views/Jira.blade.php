@@ -1097,7 +1097,7 @@
 
     <script>
         // Tu JavaScript original sin cambios
-        const API_BASE = 'http://localhost:8080/api/jira';
+        const API_BASE = 'https://apijira-production.up.railway.app/api/jira';
         let currentStats = { total: 0, unassigned: 0, projects: 0 };
         const usuariosFarmacia = [
             { id: '712020:537e8b9f-a906-480d-892e-654c3fc9b353', nombre: 'Oscar Enrique Rivas Gonzalez' },
