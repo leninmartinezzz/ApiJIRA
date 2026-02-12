@@ -1055,6 +1055,11 @@
                                     <option value="round-robin">Round Robin</option>
                                     <option value="random">Aleatorio</option>
                                     <option value="first-available">Primer Disponible</option>
+                                    <option value="Oscar-Rivas">Oscar Rivas</option>
+                                    <option value="Lenin-Martinez">Lenin Martinez</option>
+                                    <option value="Luis-Fernandez">Luis Fernandez</option>
+                                    <option value="Luis-Cardenas">Luis Cárdenas</option>
+                                    <option value="Armando-Sandoval">Armando Sandoval</option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -1095,8 +1100,8 @@
         const API_BASE = 'http://localhost:8080/api/jira';
         let currentStats = { total: 0, unassigned: 0, projects: 0 };
         const usuariosFarmacia = [
-            { id: '712020:221ce705-244d-4a0a-8f20-4775f6aa7a07', nombre: 'Lenin Martínez' },
             { id: '712020:537e8b9f-a906-480d-892e-654c3fc9b353', nombre: 'Oscar Enrique Rivas Gonzalez' },
+            { id: '712020:221ce705-244d-4a0a-8f20-4775f6aa7a07', nombre: 'Lenin Martínez' },
             { id: '712020:6f7f47d9-7e60-4562-b7c9-aa873600c941', nombre: 'Luis Fernandez' },
             { id: '712020:8a013538-df10-439c-8c2b-5800d84dca6c', nombre: 'Luis Miguel Cárdenas Herrera' },
             { id: '712020:36804383-1c8c-43ce-aad3-27d34b0b1466', nombre: 'Armando Jose Sandoval Urdaneta' }
@@ -1297,6 +1302,7 @@
                             <i class="fas fa-info-circle"></i> No se encontraron issues.
                         </div>
                     `;
+
                 } else {
                     html += `
                         <div class="table-responsive">
@@ -1319,7 +1325,31 @@
                         const statusClass = getStatusClass(issue.status);
                         const priorityClass = getPriorityClass(issue.priority);
 
+                        if(issue.status.toLowerCase() === 'esperando soporte' && issue.assignee === 'Sin asignar') {
                         html += `
+                            <tr class="issue-row">
+                                <td>
+                                    <strong class="issue-key" onclick="viewIssueDetail('${issue.key}')">${issue.key}</strong>
+                                </td>
+                                <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${escapeHtml(issue.summary)}
+                                </td>
+                                <td><span class="status-badge ${statusClass}">${issue.status}</span></td>
+                                <td><span class="priority-badge ${priorityClass}">${issue.priority}</span></td>
+                                <td>${issue.assignee || '<span class="text-danger">Sin asignar</span>'}</td>
+                                <td><small>${formatDateShort(issue.created.date)}</small></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary py-1 px-2" onclick="viewIssueDetail('${issue.key}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary py-1 px-2" onclick="assignUnassignedTicketsSpecify('${issue.key}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }else{
+                            html += `
                             <tr class="issue-row">
                                 <td>
                                     <strong class="issue-key" onclick="viewIssueDetail('${issue.key}')">${issue.key}</strong>
@@ -1338,7 +1368,10 @@
                                 </td>
                             </tr>
                         `;
+                    }
                     });
+
+
 
                     html += `
                                 </tbody>
@@ -1366,10 +1399,13 @@ async function getIssue() {
         return;
     }
 
+    console.log(issueKey);
+
     showLoading('issue-result');
 
     try {
         const response = await axios.get(`${API_BASE}/issue/${issueKey}`);
+
 
         if (response.data.success) {
             const issue = response.data.data;
@@ -1559,6 +1595,33 @@ async function getIssue() {
             }
         }
 
+                // 🎯 Función para asignar tickets sin asignar
+        async function assignUnassignedTicketsSpecify(issueKey) {
+            const jql = `project = HelpyIT and "Request Type" NOT IN ("Incidente de Infraestructura (COB)", "Solicitud de Infraestructura (COB)") and status NOT IN (Cerrada, Cancelled, "En Progreso", "En revisión", Resuelta, "Derivada a terceros", "Derivada Soporte N2", "Derivada Soporte N 2", Rechazado, "Esperando respuesta del usuario") AND reporter in membersOf("Cobeca-usuarios-farmacia") and assignee = EMPTY and issue = "${issueKey}" order BY createdDate desc`;
+
+            showLoading('search-result');
+
+            console.log(issueKey);
+
+            try {
+                const response = await axios.get(`${API_BASE}/issues`, {
+                    params: { jql, limit: 50 }
+                });
+
+                ticketsSinAsignar = response.data.issues || [];
+
+                if (ticketsSinAsignar.length === 0) {
+                    showError('search-result', 'No hay tickets sin asignar para procesar');
+                    return;
+                }
+
+                showAssignmentModal();
+
+            } catch (error) {
+                showError('search-result', error.response?.data?.error || error.message);
+            }
+        }
+
         // 🪟 Mostrar modal de asignación
         function showAssignmentModal() {
             const usersList = document.getElementById('users-list');
@@ -1705,9 +1768,35 @@ async function getIssue() {
                         user = availableUsers[Math.floor(Math.random() * availableUsers.length)];
                         break;
 
+                    case 'Oscar-Rivas':
+                        user = usuariosFarmacia[0];
+                        console.log(user);
+                        break;
+
+                    case 'Lenin-Martinez':
+                        user = usuariosFarmacia[1];
+                        console.log(user);
+                        break;
+
+                    case 'Luis-Fernandez':
+                        user = usuariosFarmacia[2];
+                        console.log(user);
+                        break;
+
+                    case 'Luis-Cardenas':
+                        user = usuariosFarmacia[3];
+                        console.log(user);
+                        break;
+
+                    case 'Armando-Sandoval':
+                        user = usuariosFarmacia[4];
+                        console.log(user);
+                        break;
+
                     case 'first-available':
                     default:
                         user = usuariosFarmacia.find(u => userCounts[u.id] < limitPerUser) || usuariosFarmacia[0];
+                        console.log(user);
                         break;
                 }
 
