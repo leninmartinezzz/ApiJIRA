@@ -798,17 +798,17 @@
                         <i class="fa-brands fa-atlassian"></i> JIRA API
                     </h1>
                     <p class="mb-0 text-center text-md-start">
-                        <span class="d-none d-sm-inline">Panel de pruebas para la API de JIRA - </span>
+                        <span>Panel de pruebas para la API de JIRA - </span>
                         <strong>{{ config('services.jira.base_url') }}</strong>
                     </p>
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-end">
                     <div class="d-flex flex-wrap flex-md-nowrap justify-content-center justify-content-md-end gap-2">
                         <button class="btn btn-light w-100 w-md-auto" onclick="testConnection()" id="connection-btn">
-                            <i class="fas fa-plug"></i> <span class="d-none d-sm-inline">Probar Conexión</span><span class="d-sm-none">Test</span>
+                            <i class="fas fa-plug"></i> Probar Conexión
                         </button>
                         <button class="btn btn-light w-100 w-md-auto" onclick="getProjects()">
-                            <i class="fas fa-project-diagram"></i> <span class="d-none d-sm-inline">Proyectos</span><span class="d-sm-none">Proy</span>
+                            <i class="fas fa-project-diagram"></i> Proyectos
                         </button>
                     </div>
                 </div>
@@ -834,9 +834,9 @@
                     <div class="stat-number" id="unassigned-count">0</div>
                     <div class="stat-label">Sin Asignar</div>
                     <div class="mt-2">
-                        <button class="btn btn-sm btn-danger w-100" onclick="assignUnassignedTickets()" id="assign-btn">
-                            <i class="fas fa-user-plus"></i> <span class="d-none d-sm-inline">Asignar</span>
-                        </button>
+                                <button class="btn btn-sm btn-danger w-100" onclick="assignUnassignedTickets()" id="assign-btn">
+                                    <i class="fas fa-user-plus"></i> Asignar
+                                </button>
                     </div>
                 </div>
             </div>
@@ -855,22 +855,22 @@
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab">
-                        <i class="fas fa-search"></i> <span class="d-none d-sm-inline">Búsqueda</span>
+                        <i class="fas fa-search"></i> Búsqueda
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="projects-tab" data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab">
-                        <i class="fas fa-folder"></i> <span class="d-none d-sm-inline">Proyectos</span>
+                        <i class="fas fa-folder"></i> Proyectos
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="quickview-tab" data-bs-toggle="tab" data-bs-target="#quickview" type="button" role="tab">
-                        <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">Vista Rápida</span>
+                        <i class="fas fa-eye"></i> Vista Rápida
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tester-tab" data-bs-toggle="tab" data-bs-target="#tester" type="button" role="tab">
-                        <i class="fas fa-vial"></i> <span class="d-none d-sm-inline">Tester</span>
+                        <i class="fas fa-vial"></i> Tester
                     </button>
                 </li>
             </ul>
@@ -895,7 +895,7 @@
                         <div class="col-6 col-md-2">
                             <label class="form-label">&nbsp;</label>
                             <button class="btn btn-primary btn-jira w-100" onclick="searchIssues()">
-                                <i class="fas fa-search"></i> <span class="d-none d-sm-inline">Buscar</span>
+                                <i class="fas fa-search"></i> Buscar
                             </button>
                         </div>
                     </div>
@@ -904,22 +904,22 @@
                         <label class="form-label"><i class="fas fa-bolt"></i> Consultas Predefinidas</label>
                         <div class="d-flex flex-wrap gap-2">
                             <button class="btn btn-success btn-outline-jira btn-sm flex-fill flex-md-grow-0" onclick="setJQLTicketsrecientes()">
-                                <i class="fas fa-clock"></i> <span class="d-none d-sm-inline">Recientes</span>
+                                <i class="fas fa-clock"></i> Recientes
                             </button>
                             <button class="btn btn-primary btn-outline-jira btn-sm flex-fill flex-md-grow-0" onclick="setJQLTicketsenprogreso()">
-                                <i class="fas fa-sync-alt"></i> <span class="d-none d-sm-inline">En Progreso</span>
+                                <i class="fas fa-sync-alt"></i> En Progreso
                             </button>
                             <button class="btn btn-warning btn-outline-jira btn-sm flex-fill flex-md-grow-0" onclick="setJQLTicketsesperandorespuesta()">
-                                <i class="fas fa-hourglass-half"></i> <span class="d-none d-sm-inline">Esperando Respuesta</span>
+                                <i class="fas fa-hourglass-half"></i> Esperando Respuesta
                             </button>
                             <button class="btn btn-secondary btn-outline-jira btn-sm flex-fill flex-md-grow-0" onclick="setJQLTicketscorporativos()">
-                                <i class="fas fa-building"></i> <span class="d-none d-sm-inline">Tickets Corporativos</span>
+                                <i class="fas fa-building"></i> Tickets Corporativos
                             </button>
                             <button class="btn btn-info btn-outline-jira btn-sm flex-fill flex-md-grow-0" onclick="setJQLFarmaciaSinAsignar()">
-                                <i class="fas fa-pills"></i> <span class="d-none d-sm-inline">Sin Asignar</span>
+                                <i class="fas fa-pills"></i> Sin Asignar
                             </button>
                             <button class="btn btn-danger btn-outline-jira btn-sm flex-fill flex-md-grow-0" onclick="setJQLTicketsAltaprioridad()">
-                                <i class="fas fa-exclamation-triangle"></i> <span class="d-none d-sm-inline">Alta Prioridad</span>
+                                <i class="fas fa-exclamation-triangle"></i> Alta Prioridad
                             </button>
                         </div>
                     </div>
@@ -962,7 +962,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="issueKey" placeholder="Ej: COB-123" value="COB-">
                                     <button class="btn btn-jira" onclick="getIssue()">
-                                        <i class="fas fa-search"></i> <span class="d-none d-sm-inline">Buscar</span>
+                                        <i class="fas fa-search"></i> Buscar
                                     </button>
                                 </div>
                             </div>
@@ -1121,12 +1121,12 @@
             if (connected) {
                 badge.className = 'badge bg-success';
                 badge.textContent = 'Conectado';
-                btn.innerHTML = '<i class="fas fa-check-circle"></i> <span class="d-none d-sm-inline">Conectado</span><span class="d-sm-none">OK</span>';
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Conectado';
                 btn.className = 'btn btn-success w-100 w-md-auto';
             } else {
                 badge.className = 'badge bg-danger';
                 badge.textContent = 'Desconectado';
-                btn.innerHTML = '<i class="fas fa-plug"></i> <span class="d-none d-sm-inline">Probar Conexión</span><span class="d-sm-none">Test</span>';
+                btn.innerHTML = '<i class="fas fa-plug"></i> Probar Conexión';
                 btn.className = 'btn btn-light w-100 w-md-auto';
             }
         }
